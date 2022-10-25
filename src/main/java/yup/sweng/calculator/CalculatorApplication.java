@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalculatorApplication {
 
     @GetMapping("/welcome")
-    public  String welcome() {
+    public static String welcome() {
         return "Welcome to calcuator";
     }
     public static void main(String[] args) {
