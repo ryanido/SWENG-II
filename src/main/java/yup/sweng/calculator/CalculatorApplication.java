@@ -39,7 +39,7 @@ public class CalculatorApplication {
         boolean doubleOperator = false;
         boolean notFullProblem = false;
         boolean lastItemInStringIsOperator = false;
-        boolean fisrtItemInStringIsOperator = false;
+        boolean firstItemInStringIsOperator = false;
         boolean oddNumberOfBrackets = false;
         boolean expProblem = false;
         boolean lnProblem = false;
@@ -160,7 +160,7 @@ public class CalculatorApplication {
                     {
                         stringIsValid = false;
                         notFullProblem = true;
-                        fisrtItemInStringIsOperator = true;
+                        firstItemInStringIsOperator = true;
                     }
                     else
                     {
@@ -203,7 +203,7 @@ public class CalculatorApplication {
             if(ch[0] == '+' || ch[0] == '*' || ch[0] == '/' || ch[0] == '^') // check if first char in string is operator that isnt minus
             {
                 stringIsValid = false;
-                fisrtItemInStringIsOperator = true;
+                firstItemInStringIsOperator = true;
             }
             if(countOfLB != countOfRB)
             {
@@ -216,7 +216,7 @@ public class CalculatorApplication {
             {
                 if(notNumberOrOperator == true) returnMessage = returnMessage + "ERROR: Please only enter numbers and operators. ('+', '-', '*', '/', '^')\n";
                 if(doubleOperator == true) returnMessage = returnMessage + "ERROR: Do not duplicate operation character.\n";
-                if(fisrtItemInStringIsOperator == true) returnMessage = returnMessage + "ERROR: First item can't be operator unless starting with minus number.\n";
+                if(firstItemInStringIsOperator == true) returnMessage = returnMessage + "ERROR: First item can't be operator unless starting with minus number.\n";
                 if(lastItemInStringIsOperator == true) returnMessage = returnMessage + "ERROR: Last item can't be operator.\n";
                 if(notFullProblem == true) returnMessage = returnMessage + "ERROR: Please enter a full problem.\n";
                 if (oddNumberOfBrackets == true) returnMessage = returnMessage + "ERROR: Please enter as many left brackets as right brackets.\n";
