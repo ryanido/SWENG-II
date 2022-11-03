@@ -61,7 +61,7 @@ class CalculatorApplicationTests {
         //Test if correct answer for basic evaluation(+ , -, *, /, ^)
         assert tmpEvaluator.compute("9 * (9^8 + 10/2) - 3") == 387420531;
         //Test if correct answer for advanced evaluation(exp,ln)
-        //assert tmpEvaluator.compute("1 + 2 * ln(exp2)") == 5;
+        assert tmpEvaluator.compute("3 + ln(exp(2))") == 5;
     }
 
 

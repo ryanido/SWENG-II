@@ -268,6 +268,8 @@ public class CalculatorApplication {
             double x = getNextExpression ();  // at the outside, everything is an expression to tries to find one
             if (pos < str.length ())  // if the expression is finished and we are not at the end of the string, then it is an error
                 throw new RuntimeException ("Unexpected: " + (char) ch);
+            str = "";
+            pos = -1;
             return x;
         }
 
