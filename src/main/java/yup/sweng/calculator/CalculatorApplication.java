@@ -33,7 +33,7 @@ public class CalculatorApplication {
     public static String errorChecking(String input) {
 
         boolean checked = false;
-        String currentInput = input;
+        String currentInput = input.replaceAll(" ", "");;
         boolean stringIsValid = true;
         boolean notNumberOrOperator = false;
         boolean doubleOperator = false;
@@ -167,7 +167,7 @@ public class CalculatorApplication {
                         if(j>0)
                         {
                             if(ch[j-1] == '0' || ch[j-1] == '1' || ch[j-1] == '2' || ch[j-1] == '3' || ch[j-1] == '4'
-                                    || ch[j-1] == '5' || ch[j-1] == '6' || ch[j-1] == '7' || ch[j-1] == '8' || ch[j-1] == '9')// check for number behind '-'
+                                    || ch[j-1] == '5' || ch[j-1] == '6' || ch[j-1] == '7' || ch[j-1] == '8' || ch[j-1] == '9'|| ch[j-1] == '('|| ch[j-1] == ')')// check for number behind '-'
                             {
                                 stringIsValid = true;
                             }
@@ -239,7 +239,7 @@ public class CalculatorApplication {
 
         public double compute (String toCalculate)
         {
-            str = toCalculate;
+            str = toCalculate.replaceAll(" ", "");;
             return parse ();
         }
 
