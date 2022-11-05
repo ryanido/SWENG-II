@@ -11,7 +11,7 @@ public class CalculatorApplication {
 
     @GetMapping("/welcome")
     public static String welcome() {
-        return "Welcome to calculator";
+        return "Welcome to calculator **release two";
     }
     public static void main(String[] args) {
         SpringApplication.run(CalculatorApplication.class, args);
