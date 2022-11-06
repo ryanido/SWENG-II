@@ -3,7 +3,7 @@ name: CD to Docker Hub
 on:
   create:
     tags:
-      - "v*.*.*"
+      - "v*.*.*.*"
 
 jobs:
   build:
