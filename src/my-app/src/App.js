@@ -49,7 +49,6 @@ function App() {
                 id="inputbox"
                 sx={{input: { color: '#e1f5fe' }}}
                 placeholder="Enter a valid expression" 
-                type="outlined"
                 value={value}
                 onChange={(newValue) => {
                   setValue(newValue.target.value);
@@ -57,7 +56,7 @@ function App() {
                 onKeyPress={(ent) => {
                   if (ent.key === "Enter") {
                     console.log(value);
-                    setResult("Test result")
+                    setResult("Test result1")
                   }
                 }}
               />
@@ -72,7 +71,17 @@ function App() {
                   variant="contained"
                   onClick={(cclk) => {
                     console.log(value);
-                    setResult("Test result")
+                    fetch('/api', {
+                      method: 'POST',
+                      body: JSON.stringify({ input:  value }),
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                      },
+                    }).then(response => response.json())
+                    .then(data => {
+                      console.log(data)
+                    })
                   }}
                 >
                   Calculate

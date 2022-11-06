@@ -1,11 +1,15 @@
 package yup.sweng.calculator;
 
+import org.json.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @SpringBootApplication
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 public class CalculatorApplication {
 
@@ -28,6 +32,25 @@ public class CalculatorApplication {
 
     }
 
+    @RequestMapping("/api")
+    public ResponseEntity<JSONObject> calc(@RequestBody Map<String, String> params){
+        String inputStr = params.get("input");
+        String checkAnswer = errorChecking(inputStr);
+        JSONObject result = new JSONObject();
+        if (checkAnswer == "Valid" )
+        {
+            result.put("error", "false");
+            Evaluator evaluator = new Evaluator();
+            double number = evaluator.compute(inputStr);
+            // this will need to be in the UI
+            result.put("result", ("Result is: " + (Math.round(number * 1000))/1000.0 + "\n"));
+        }
+        else {
+            result.put("error", "true");
+            result.put("result", checkAnswer);
+        }
+        return ResponseEntity.ok(result);
+    }
 
     // function to check the string to see if it is valid - returns "Valid" if ok, or the error message if not
     public static String errorChecking(String input) {
