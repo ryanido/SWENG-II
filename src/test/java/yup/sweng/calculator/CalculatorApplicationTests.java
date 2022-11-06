@@ -14,7 +14,7 @@ class CalculatorApplicationTests {
 
     @Test
     void testWelcome() {
-        assert welcome().equals("Welcome to calculator");
+        assert welcome().equals("Welcome to calculator **release two");
     }
 
     @Test
