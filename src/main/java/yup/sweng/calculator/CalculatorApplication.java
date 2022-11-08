@@ -1,11 +1,16 @@
 package yup.sweng.calculator;
 
+import org.json.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootApplication
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 public class CalculatorApplication {
 
@@ -28,6 +33,25 @@ public class CalculatorApplication {
 
     }
 
+    @RequestMapping("/api")
+    public Map<String, String> calc(@RequestBody Map<String, String> params){
+        String inputStr = params.get("input");
+        String checkAnswer = errorChecking(inputStr);
+        Map<String, String> result = new HashMap<>();
+        if (checkAnswer == "Valid" )
+        {
+            result.put("error", "false");
+            Evaluator evaluator = new Evaluator();
+            double number = evaluator.compute(inputStr);
+            // this will need to be in the UI
+            result.put("result", String.valueOf((Math.round(number * 1000))/1000.0));
+        }
+        else {
+            result.put("error", "true");
+            result.put("result", checkAnswer);
+        }
+        return result;
+    }
 
     // function to check the string to see if it is valid - returns "Valid" if ok, or the error message if not
     public static String errorChecking(String input) {
@@ -46,6 +70,11 @@ public class CalculatorApplication {
         int countOfLB = 0;
         int countOfRB = 0;
         String returnMessage = "";
+
+        if(currentInput.length() == 0){
+            returnMessage = returnMessage + "ERROR: The input must not be empty\n";
+            return returnMessage;
+        }
 
         // Putting input string into char array
         char[] ch = new char[currentInput.length()];

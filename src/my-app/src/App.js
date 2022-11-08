@@ -9,6 +9,38 @@ import './App.css';
 function App() {
   const [value, setValue] = React.useState("");
   const [result, setResult] = React.useState("");
+  const [helper, setHelper] = React.useState("");
+  const [error, setError] = React.useState("false");
+
+  function startCalc(){
+    if(value==""){
+      setError("true")
+      setHelper("ERROR: The input must not be empty")
+    }
+    else{
+      console.log(value);
+      setResult("")
+      setHelper("")
+      setError("false")
+      fetch('/api', {
+        method: 'POST',
+        body: JSON.stringify({ input:  value }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      }).then(response => response.json())
+      .then(data => {
+        if(data.error == "true"){
+          setError("true")
+          setHelper(data.result)
+        }
+        else{
+          setResult(data.result)
+        }
+      })
+    }
+  }
 
   return (
     <div className="App">
@@ -46,18 +78,18 @@ function App() {
               }}
             >
               <TextField
+                error= {error == "true"}
                 id="inputbox"
                 sx={{input: { color: '#e1f5fe' }}}
                 placeholder="Enter a valid expression" 
-                type="outlined"
                 value={value}
+                helperText={helper}
                 onChange={(newValue) => {
                   setValue(newValue.target.value);
                 }}
                 onKeyPress={(ent) => {
                   if (ent.key === "Enter") {
-                    console.log(value);
-                    setResult("Test result")
+                    startCalc();
                   }
                 }}
               />
@@ -71,8 +103,7 @@ function App() {
                 <Button 
                   variant="contained"
                   onClick={(cclk) => {
-                    console.log(value);
-                    setResult("Test result")
+                    startCalc();
                   }}
                 >
                   Calculate
@@ -81,7 +112,9 @@ function App() {
                   variant="outlined"
                   onClick={() => {
                     setValue("");
-                    setResult("")
+                    setResult("");
+                    setHelper("");
+                    setError("false")
                   }}
                 >
                   Reset
