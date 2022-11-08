@@ -71,6 +71,11 @@ public class CalculatorApplication {
         int countOfRB = 0;
         String returnMessage = "";
 
+        if(currentInput.length() == 0){
+            returnMessage = returnMessage + "ERROR: The input must not be empty\n";
+            return returnMessage;
+        }
+
         // Putting input string into char array
         char[] ch = new char[currentInput.length()];
         for (int i = 0; i < currentInput.length(); i++) {

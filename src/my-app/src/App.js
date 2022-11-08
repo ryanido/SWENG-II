@@ -12,6 +12,36 @@ function App() {
   const [helper, setHelper] = React.useState("");
   const [error, setError] = React.useState("false");
 
+  function startCalc(){
+    if(value==""){
+      setError("true")
+      setHelper("ERROR: The input must not be empty")
+    }
+    else{
+      console.log(value);
+      setResult("")
+      setHelper("")
+      setError("false")
+      fetch('/api', {
+        method: 'POST',
+        body: JSON.stringify({ input:  value }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      }).then(response => response.json())
+      .then(data => {
+        if(data.error == "true"){
+          setError("true")
+          setHelper(data.result)
+        }
+        else{
+          setResult(data.result)
+        }
+      })
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -59,33 +89,7 @@ function App() {
                 }}
                 onKeyPress={(ent) => {
                   if (ent.key === "Enter") {
-                    if(value==""){
-                      setError("true")
-                      setHelper("Enter should not be empty.")
-                    }
-                    else{
-                      console.log(value);
-                    setResult("")
-                    setHelper("")
-                    setError("false")
-                    fetch('/api', {
-                      method: 'POST',
-                      body: JSON.stringify({ input:  value }),
-                      headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                      },
-                    }).then(response => response.json())
-                    .then(data => {
-                      if(data.error == "true"){
-                        setError("true")
-                        setHelper(data.result)
-                      }
-                      else{
-                        setResult(data.result)
-                      }
-                    })
-                    }
+                    startCalc();
                   }
                 }}
               />
@@ -99,33 +103,7 @@ function App() {
                 <Button 
                   variant="contained"
                   onClick={(cclk) => {
-                    if(value==""){
-                      setError("true")
-                      setHelper("Enter should not be empty.")
-                    }
-                    else{
-                      console.log(value);
-                    setResult("")
-                    setHelper("")
-                    setError("false")
-                    fetch('/api', {
-                      method: 'POST',
-                      body: JSON.stringify({ input:  value }),
-                      headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                      },
-                    }).then(response => response.json())
-                    .then(data => {
-                      if(data.error == "true"){
-                        setError("true")
-                        setHelper(data.result)
-                      }
-                      else{
-                        setResult(data.result)
-                      }
-                    })
-                    }
+                    startCalc();
                   }}
                 >
                   Calculate
