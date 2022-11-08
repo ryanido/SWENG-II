@@ -3,7 +3,7 @@ name: CD to Docker Hub
 on:
   create:
     tags:
-      - "v*.*.*"
+      - "v*.*.*.*"
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/calc-image:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/calc-image:${{ github.ref_name }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

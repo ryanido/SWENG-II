@@ -16,7 +16,7 @@ public class CalculatorApplication {
 
     @GetMapping("/welcome")
     public static String welcome() {
-        return "Welcome to calculator";
+        return "Welcome to calculator **release two";
     }
     public static void main(String[] args) {
         SpringApplication.run(CalculatorApplication.class, args);
@@ -57,13 +57,13 @@ public class CalculatorApplication {
     public static String errorChecking(String input) {
 
         boolean checked = false;
-        String currentInput = input;
+        String currentInput = input.replaceAll(" ", "");;
         boolean stringIsValid = true;
         boolean notNumberOrOperator = false;
         boolean doubleOperator = false;
         boolean notFullProblem = false;
         boolean lastItemInStringIsOperator = false;
-        boolean fisrtItemInStringIsOperator = false;
+        boolean firstItemInStringIsOperator = false;
         boolean oddNumberOfBrackets = false;
         boolean expProblem = false;
         boolean lnProblem = false;
@@ -184,14 +184,14 @@ public class CalculatorApplication {
                     {
                         stringIsValid = false;
                         notFullProblem = true;
-                        fisrtItemInStringIsOperator = true;
+                        firstItemInStringIsOperator = true;
                     }
                     else
                     {
                         if(j>0)
                         {
                             if(ch[j-1] == '0' || ch[j-1] == '1' || ch[j-1] == '2' || ch[j-1] == '3' || ch[j-1] == '4'
-                                    || ch[j-1] == '5' || ch[j-1] == '6' || ch[j-1] == '7' || ch[j-1] == '8' || ch[j-1] == '9')// check for number behind '-'
+                                    || ch[j-1] == '5' || ch[j-1] == '6' || ch[j-1] == '7' || ch[j-1] == '8' || ch[j-1] == '9'|| ch[j-1] == '('|| ch[j-1] == ')')// check for number behind '-'
                             {
                                 stringIsValid = true;
                             }
@@ -227,7 +227,7 @@ public class CalculatorApplication {
             if(ch[0] == '+' || ch[0] == '*' || ch[0] == '/' || ch[0] == '^') // check if first char in string is operator that isnt minus
             {
                 stringIsValid = false;
-                fisrtItemInStringIsOperator = true;
+                firstItemInStringIsOperator = true;
             }
             if(countOfLB != countOfRB)
             {
@@ -240,7 +240,7 @@ public class CalculatorApplication {
             {
                 if(notNumberOrOperator == true) returnMessage = returnMessage + "ERROR: Please only enter numbers and operators. ('+', '-', '*', '/', '^')\n";
                 if(doubleOperator == true) returnMessage = returnMessage + "ERROR: Do not duplicate operation character.\n";
-                if(fisrtItemInStringIsOperator == true) returnMessage = returnMessage + "ERROR: First item can't be operator unless starting with minus number.\n";
+                if(firstItemInStringIsOperator == true) returnMessage = returnMessage + "ERROR: First item can't be operator unless starting with minus number.\n";
                 if(lastItemInStringIsOperator == true) returnMessage = returnMessage + "ERROR: Last item can't be operator.\n";
                 if(notFullProblem == true) returnMessage = returnMessage + "ERROR: Please enter a full problem.\n";
                 if (oddNumberOfBrackets == true) returnMessage = returnMessage + "ERROR: Please enter as many left brackets as right brackets.\n";
@@ -263,7 +263,7 @@ public class CalculatorApplication {
 
         public double compute (String toCalculate)
         {
-            str = toCalculate;
+            str = toCalculate.replaceAll(" ", "");;
             return parse ();
         }
 
@@ -292,6 +292,8 @@ public class CalculatorApplication {
             double x = getNextExpression ();  // at the outside, everything is an expression to tries to find one
             if (pos < str.length ())  // if the expression is finished and we are not at the end of the string, then it is an error
                 throw new RuntimeException ("Unexpected: " + (char) ch);
+            str = "";
+            pos = -1;
             return x;
         }
 
